@@ -1,13 +1,13 @@
 # Zubdata - Google Maps Scraper
 
 Welcome to the Zubdata GitHub Google Maps Scraper repository, an open-source GUI tool built in Python. This tool allows you to extract data from Google Maps using a user-friendly interface.
-Documentation and Exe of this tool can be found at this <a href="https://zubdata.com/google-maps-scraper">link</a>
+Documentation and Exe of this tool can be found at this [link](https://zubdata.com/google-maps-scraper) 🔗
 
 ## Features
 
-- User-friendly graphical interface for easy navigation and interaction.
+- User-friendly graphical interface for easy navigation and interaction. 😊
 - Scrapes various data from Google Maps, such as business names, addresses, phone number, website, ratings, and total reviews.
-- Fast and efficient
+- Fast and efficient 🚀
 
 
 ## Repository Structure
@@ -25,7 +25,7 @@ To get started with the Google Maps Scraper, follow these steps:
 
 1. Clone the repository to your local machine:
    ```shell
-   git clone https://github.com/Zubdata/google-maps-scraper.git
+   git clone https://github.com/Zubdata/Google-Maps-Scraper.git
    ```
 
 2. Install the required dependencies by running the following command:
@@ -33,7 +33,7 @@ To get started with the Google Maps Scraper, follow these steps:
    pip install -r requirements.txt
    ```
 
-3. Launch the Google Maps Scraper GUI by running the <strong>frontend.py</strong> file:
+3. Launch the Google Maps Scraper GUI by running the **frontend.py** file.
 
 4. Use the GUI to enter your search criteria and initiate the scraping process.
 
@@ -43,7 +43,7 @@ We welcome contributions from the open-source community to enhance the Google Ma
 
 1. Fork the repository.
 
-2. Create a new branch for your feature or bug fix:
+2. Create a new branch for your feature or bug fix.
 
 3. Make your changes and commit them with descriptive commit messages.
 
@@ -53,13 +53,14 @@ We welcome contributions from the open-source community to enhance the Google Ma
 
 6. Wait for the code review and address any feedback received.
 
+7. You can also contribute by updating the readme.md.
 
 ## License
 
-The Google Maps Scraper tool is open-source software licensed under the <a href="https://github.com/Zubdata/google-maps-scraper/blob/main/LICENSE">GNU GENERAL PUBLIC LICENSE</a>
+The Google Maps Scraper tool is open-source software licensed under the [GNU GENERAL PUBLIC LICENSE](https://github.com/Zubdata/Google-Maps-Scraper/blob/main/LICENSE) 📜
 
 ## Support
 
 If you encounter any issues or have any questions or suggestions, please feel free to open an issue. We appreciate your feedback and are here to assist you.
 
-Happy scraping with Zubdata's Google Maps Scraper!
+Happy scraping with Zubdata's Google Maps Scraper! ✨
