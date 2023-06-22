@@ -49,7 +49,7 @@ We welcome contributions from the open-source community to enhance the Google Ma
 
 4. Push your changes to your forked repository.
 
-5. Create a pull request to the `main` branch of the Zubdata organization's repository.
+5. Create a pull request to the `main` branch of the repository.
 
 6. Wait for the code review and address any feedback received.
 
