@@ -100,6 +100,12 @@ class Frontend(Backend):
         )
         self.resetSettingsButton.place(x=20, y=590)
 
+        """For healdess checkbox"""
+
+        self.healdessCheckBoxVar=tk.IntVar()
+        self.healdessCheckBox= tk.Checkbutton(self.root,text="Headless mode",variable=self.healdessCheckBoxVar)
+        self.healdessCheckBox.place(x=700,y=45)
+
 
         self.__replacingtext(
             "Welcome to Google Maps Scraper!\n\nLet's start scraping..."
@@ -151,6 +157,7 @@ class Frontend(Backend):
 
                 self.searchQuery = self.searchQuery.lower()
                 self.outputFormatValue = self.outputFormatValue.lower()
+                self.headlessMode=self.healdessCheckBoxVar.get()
 
                 self.threadToStartBackend = threading.Thread(target=self.startscraping)
                 self.threadToStartBackend.start()
@@ -170,6 +177,7 @@ class Frontend(Backend):
             self.outputFormatValue,
             self.messageshowing,
             self.outputfolderpath,
+            healdessmode=self.headlessMode
         )
 
         self.mainscraping()

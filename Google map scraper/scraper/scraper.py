@@ -35,7 +35,7 @@ class Backend:
 
     timeout = 60
 
-    def __init__(self, searchquery, outputformat, messageshowingfunc, outputpath):
+    def __init__(self, searchquery, outputformat, messageshowingfunc, outputpath,healdessmode):
         """
         params:
 
@@ -43,6 +43,7 @@ class Backend:
         outputformat: output format of file , selected by user
         messageshowingfunc: function refernece to function of frontend class to 
         outputpath: directory path where file will be stored after scraping
+        headlessmode: it's value can be 0 and 1, 0 means unchecked box and 1 means checked
 
         """
 
@@ -50,12 +51,7 @@ class Backend:
         self.searchquery = searchquery  # search query that user will enter
         self.messageshowing = messageshowingfunc  # it is a function used as api for transfering message form this backend to frontend
 
-        """
-        output path is location of folder where file will be stored after scraping.
-        it will be asked When user will use this application for first time, after that 
-        user can change this path by clicking on the button "Reset path" 
-        """
-
+        self.headlessMode=healdessmode
         self.datasaver = DataSaver(
             selectedpath=outputpath,
             outputformat=outputformat,
@@ -197,6 +193,10 @@ class Backend:
             """Starting our browser"""
 
             options = uc.ChromeOptions()
+            
+            if self.headlessMode==1:
+                options.headless=True
+
             prefs = {"profile.managed_default_content_settings.images": 2}
             options.add_experimental_option("prefs", prefs)
 
