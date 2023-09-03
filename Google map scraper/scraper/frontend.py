@@ -2,7 +2,7 @@
 This module contain the code for frontend
 """
 
-
+import sys
 import tkinter as tk
 from tkinter import ttk, filedialog, WORD
 from scraper import Backend
@@ -190,10 +190,14 @@ class Frontend(Backend):
         custom=False,
         value=None,
         noresultfound=False,
+        exception = None
     ):
 
         if interruptionerror:
             self.__replacingtext("Interruption in browser is absorved")
+            if exception:
+                self.__replacingtext("Error is: "+ exception)
+
             self.submit_button.config(state="normal")
             try:
                 if self.threadToStartBackend.is_alive():
