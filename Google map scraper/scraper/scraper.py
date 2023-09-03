@@ -3,29 +3,17 @@ This module contain the code for backend,
 that will handle scraping process
 """
 
-
-
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
 from bs4 import BeautifulSoup
 from time import sleep
 import time
-from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as Ec
 from selenium.common.exceptions import (
-    NoSuchWindowException,
     WebDriverException,
-    NoSuchElementException,
-    TimeoutException,
-    StaleElementReferenceException,
     JavascriptException,
 )
-from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
 import sys
 import threading
-import os
 import undetected_chromedriver as uc
 from datasaver import DataSaver
 
@@ -298,9 +286,9 @@ class Backend:
             """
         Handling all errors.If any error occurs like user has closed the self.driver and if 'no such window' error occurs
             """
-        except:
+        except Exception as e:
             try:
-                self.messageshowing(interruptionerror=True)
+                self.messageshowing(interruptionerror=True,exception = str(e))
 
                 try:
                     self.driver.quit()
