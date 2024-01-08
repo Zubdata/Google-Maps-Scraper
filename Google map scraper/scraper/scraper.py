@@ -15,15 +15,16 @@ from selenium.common.exceptions import (
 import sys
 import threading
 import undetected_chromedriver as uc
-from datasaver import DataSaver
+from .datasaver import DataSaver
+from .settings import DRIVER_EXECUTABLE_PATH
 
 
 class Backend:
-    closeThread=threading.Event()
+    closeThread = threading.Event()
 
     timeout = 60
 
-    def __init__(self, searchquery, outputformat, messageshowingfunc, outputpath,healdessmode):
+    def __init__(self, searchquery, outputformat, messageshowingfunc,  healdessmode):
         """
         params:
 
@@ -35,13 +36,12 @@ class Backend:
 
         """
 
-
         self.searchquery = searchquery  # search query that user will enter
-        self.messageshowing = messageshowingfunc  # it is a function used as api for transfering message form this backend to frontend
+        # it is a function used as api for transfering message form this backend to frontend
+        self.messageshowing = messageshowingfunc
 
-        self.headlessMode=healdessmode
+        self.headlessMode = healdessmode
         self.datasaver = DataSaver(
-            selectedpath=outputpath,
             outputformat=outputformat,
             messageshowfunc=messageshowingfunc,
         )
@@ -57,7 +57,7 @@ class Backend:
     def openingurl(self, url: str):
         """
         To avoid internet connection error while requesting"""
-        
+
         while True:
             if self.closeThread.is_set():
                 self.driver.quit()
@@ -78,7 +78,8 @@ class Backend:
         Details sheet means that business details card when you click on a business in 
         serach results in google maps"""
 
-        infoSheet = self.driver.execute_script("""return document.querySelector("[role='main']")""")
+        infoSheet = self.driver.execute_script(
+            """return document.querySelector("[role='main']")""")
         try:
             """If that information sheet is founded in try block, this block will run and find the contact details"""
             rating, totalReviews, address, websiteUrl, phone = (
@@ -104,12 +105,12 @@ class Backend:
                 totalReviews = list(soup.find("div", class_="F7nice").children)
                 totalReviews = totalReviews[1].get_text(
                     strip=True
-                )  
+                )
 
             except:
                 totalReviews = None
 
-            name = soup.find("h1", class_="DUwDvf fontHeadlineLarge").text.strip()
+            name = soup.select_one(selector=".tAiQdd h1.DUwDvf").text.strip()
 
             allInfoBars = soup.find_all("div", class_="AeaXub")
 
@@ -146,7 +147,7 @@ class Backend:
 
             self.finalData.append(data)
 
-        except:  #some resuts have no information , so we dont want them in our pretty cleaned list
+        except:  # some resuts have no information , so we dont want them in our pretty cleaned list
             pass
 
     def mainscraping(self):
@@ -164,7 +165,7 @@ class Backend:
             # ==========================================
 
             """ 
-            We will use these links to find our recuired data from information fields of the business card
+            We will use these links to find our required data from information fields of the business card
             To understand it , kindly see its use in parsing
             """
             self.comparingLinks = {
@@ -181,9 +182,9 @@ class Backend:
             """Starting our browser"""
 
             options = uc.ChromeOptions()
-            
-            if self.headlessMode==1:
-                options.headless=True
+
+            if self.headlessMode == 1:
+                options.headless = True
 
             prefs = {"profile.managed_default_content_settings.images": 2}
             options.add_experimental_option("prefs", prefs)
@@ -192,8 +193,17 @@ class Backend:
                 custom=True,
                 value="Wait checking for driver...\nIf you don't have webdriver in your machine it will install it",
             )
+            try:
+                if DRIVER_EXECUTABLE_PATH is not None:
+                    self.driver = uc.Chrome(
+                        driver_executable_path=DRIVER_EXECUTABLE_PATH, options=options)
 
-            self.driver = uc.Chrome(options=options)
+                else:
+                    self.driver = uc.Chrome(options=options)
+
+            except NameError:
+                self.driver = uc.Chrome(options=options)
+
             self.driver.maximize_window()
             self.messageshowing(custom=True, value="Opening browser...")
             self.driver.implicitly_wait(self.timeout)
@@ -209,9 +219,8 @@ class Backend:
                 """return document.querySelector("[role='feed']")"""
             )
 
-
             """In case search results are not available"""
-            if scrollAbleElement is None:  
+            if scrollAbleElement is None:
                 self.messageshowing(noresultfound=True)
 
             else:
@@ -238,14 +247,12 @@ class Backend:
                     if new_height == last_height:
                         """checking if we have reached end of the list"""
 
-                        script="""
-                        const xpathExpression = '//*[text()="You\\'ve reached the end of the list."]';
-                        const result = document.evaluate(xpathExpression, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
-                        const element = result.singleNodeValue;
-                        return element;
-
+                        script = f"""
+                        const endingElement = document.querySelector(".PbZDve ");
+                        return endingElement;
                         """
-                        endAlertElement = self.driver.execute_script(script) # to know that we are at end of list or not
+                        endAlertElement = self.driver.execute_script(
+                            script)  # to know that we are at end of list or not
 
                         if endAlertElement is None:
                             """if it returns empty list its mean we are not at the end of list"""
@@ -256,39 +263,38 @@ class Backend:
                             except JavascriptException:
                                 pass
                         else:
-                            
 
                             break
                     else:
                         last_height = new_height
 
+                allResultsListSoup = BeautifulSoup(
+                    scrollAbleElement.get_attribute('outerHTML'), 'html.parser')
 
-                allResultsListSoup = BeautifulSoup(scrollAbleElement.get_attribute('outerHTML'),'html.parser')
-
-
-                allResultsAnchorTags=allResultsListSoup.find_all('a',class_='hfpxzc')
+                allResultsAnchorTags = allResultsListSoup.find_all(
+                    'a', class_='hfpxzc')
 
                 """all the links of results"""
-                allResultsLinks=[anchorTag.get('href') for anchorTag in allResultsAnchorTags] 
-
+                allResultsLinks = [anchorTag.get(
+                    'href') for anchorTag in allResultsAnchorTags]
 
                 for resultLink in allResultsLinks:
-                    if  self.closeThread.is_set():
+                    if self.closeThread.is_set():
                         self.driver.quit()
                         return
 
                     self.openingurl(url=resultLink)
                     self.parsing()
 
-
-
-
             """
         Handling all errors.If any error occurs like user has closed the self.driver and if 'no such window' error occurs
             """
         except Exception as e:
+            import traceback
+            traceback.print_exc()
+
             try:
-                self.messageshowing(interruptionerror=True,exception = str(e))
+                self.messageshowing(interruptionerror=True, exception=str(e))
 
                 try:
                     self.driver.quit()
@@ -300,11 +306,9 @@ class Backend:
                 except:
                     pass
             except RuntimeError:
-                    sys.exit()
+                sys.exit()
 
         else:  # if not any error occured, will save the data smoothly
             self.driver.close()
 
             self.datasaver.save(self.finalData)
-
-

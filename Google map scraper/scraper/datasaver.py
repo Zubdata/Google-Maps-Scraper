@@ -4,12 +4,12 @@ This module contain the code for saving the scraped data
 
 
 import pandas as pd
+from .settings import OUTPUT_PATH
 import os
 
 
 class DataSaver:
-    def __init__(self, selectedpath, outputformat, messageshowfunc) -> None:
-        self.selectedPath = selectedpath
+    def __init__(self, outputformat, messageshowfunc) -> None:
         self.outputFormat = outputformat
         self.messageShowFunc = messageshowfunc
 
@@ -35,21 +35,20 @@ class DataSaver:
             elif self.outputFormat == "json":
                 extension = ".json"
 
-            joinedPath = self.selectedPath + filename + extension
+            joinedPath = OUTPUT_PATH + filename + extension
 
             if os.path.exists(joinedPath):
                 index = 1
                 while True:
                     filename = f"/gms output{index}"
 
-                    joinedPath = self.selectedPath + filename + extension
+                    joinedPath = OUTPUT_PATH + filename + extension
 
                     if os.path.exists(joinedPath):
                         index += 1
 
                     else:
                         break
-
             if self.outputFormat == "excel":
                 dataFrame.to_excel(joinedPath, index=False)
             elif self.outputFormat == "csv":
