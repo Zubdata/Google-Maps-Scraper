@@ -1,24 +1,19 @@
 """
 This module contain the code for frontend
 """
-
-import sys
 import tkinter as tk
-from tkinter import ttk, filedialog, WORD
-from scraper import Backend
-import os
+from tkinter import ttk,  WORD
+from scraper.scraper import Backend
 import threading
-import json
+
 
 
 class Frontend(Backend):
     def __init__(self):
-        self.settingsPath = self.pathmaker("settings/outputpath.json")
-
         """Initializing frontend layout"""
 
         self.root = tk.Tk()
-        icon = tk.PhotoImage(file=self.pathmaker("images/GMS.png"))
+        icon = tk.PhotoImage(file="Google map scraper\images\GMS.png")
 
         self.root.iconphoto(True, icon)
         self.root.geometry("850x650")
@@ -32,7 +27,7 @@ class Frontend(Backend):
             background=[("active", "white")],
         )
 
-        bgimage = tk.PhotoImage(file=self.pathmaker("images/Home.png"))
+        bgimage = tk.PhotoImage(file="Google map scraper\images\Home.png")
 
         self.imglabel = tk.Label(self.root, image=bgimage)
         self.imglabel.place(x=0, y=0, relwidth=1, relheight=1)
@@ -90,22 +85,12 @@ class Frontend(Backend):
         )
         self.show_text.place(x=295, y=440)
 
-        """For reset settings button"""
-        self.resetSettingsButton = ttk.Button(
-            self.root,
-            text="Reset settings",
-            width=15,
-            command=self.resetsettings,
-            style="my.TButton",
-        )
-        self.resetSettingsButton.place(x=20, y=590)
-
         """For healdess checkbox"""
 
-        self.healdessCheckBoxVar=tk.IntVar()
-        self.healdessCheckBox= tk.Checkbutton(self.root,text="Headless mode",variable=self.healdessCheckBoxVar)
-        self.healdessCheckBox.place(x=700,y=45)
-
+        self.healdessCheckBoxVar = tk.IntVar()
+        self.healdessCheckBox = tk.Checkbutton(
+            self.root, text="Headless mode", variable=self.healdessCheckBoxVar)
+        self.healdessCheckBox.place(x=700, y=45)
 
         self.__replacingtext(
             "Welcome to Google Maps Scraper!\n\nLet's start scraping..."
@@ -115,23 +100,10 @@ class Frontend(Backend):
         """This function will insert the text in text showing box"""
 
         self.show_text.config(state="normal")
-        # self.messageShowBox.delete(index1=1.0,index2=tkinter.END)
         self.show_text.insert(tk.END, "• " + text)
         self.show_text.insert(tk.END, "\n\n")
         self.show_text.see(tk.END)
         self.show_text.config(state="disabled")
-
-    def pathmaker(self, relativepath):
-        """Get absolute path to resurce, for deployment of this application
-        using PyInstaller"""
-
-        try:
-            # PyInstaller creates a temp folder and stores path in _MEIPASS
-            base_path = sys._MEIPASS
-        except Exception as p:
-            base_path = os.path.abspath(".")
-
-        return os.path.join(base_path, relativepath)
 
     def getinput(self):
         self.searchQuery = self.search_box.get()
@@ -146,21 +118,15 @@ class Frontend(Backend):
             self.__replacingtext(text="Oops! You did not select output format")
 
         else:
-            self.askingfolderpath()
+            self.submit_button.config(state="disabled")
 
-            if len(self.outputfolderpath) == 0:
-                self.__replacingtext(
-                    "You did not select any folder\nKindly submit again and select one folder where files will be stored"
-                )
-            else:
-                self.submit_button.config(state="disabled")
+            self.searchQuery = self.searchQuery.lower()
+            self.outputFormatValue = self.outputFormatValue.lower()
+            self.headlessMode = self.healdessCheckBoxVar.get()
 
-                self.searchQuery = self.searchQuery.lower()
-                self.outputFormatValue = self.outputFormatValue.lower()
-                self.headlessMode=self.healdessCheckBoxVar.get()
-
-                self.threadToStartBackend = threading.Thread(target=self.startscraping)
-                self.threadToStartBackend.start()
+            self.threadToStartBackend = threading.Thread(
+                target=self.startscraping)
+            self.threadToStartBackend.start()
 
     def closingbrowser(self):
         """It will close the browser when the app is closed"""
@@ -176,7 +142,6 @@ class Frontend(Backend):
             self.searchQuery,
             self.outputFormatValue,
             self.messageshowing,
-            self.outputfolderpath,
             healdessmode=self.headlessMode
         )
 
@@ -190,13 +155,13 @@ class Frontend(Backend):
         custom=False,
         value=None,
         noresultfound=False,
-        exception = None
+        exception=None
     ):
 
         if interruptionerror:
             self.__replacingtext("Interruption in browser is absorved")
             if exception:
-                self.__replacingtext("Error is: "+ exception)
+                self.__replacingtext("Error is: " + exception)
 
             self.submit_button.config(state="normal")
             try:
@@ -215,7 +180,7 @@ class Frontend(Backend):
                     self.threadToStartBackend.join()
             except:
                 pass
-        
+
         elif noresultfound:
             self.submit_button.config(state="normal")
             try:
@@ -224,40 +189,11 @@ class Frontend(Backend):
             except:
                 pass
 
-            self.__replacingtext("We are sorry but, No results found for your search query on googel maps....")
-            
+            self.__replacingtext(
+                "We are sorry but, No results found for your search query on googel maps....")
+
         elif custom:
             self.__replacingtext(text=value)
-
-    def askingfolderpath(self):
-        with open(self.settingsPath, "r") as f:
-            self.outputfolderpath = json.load(f)["path"]
-
-        if len(self.outputfolderpath) == 0:
-            self.__replacingtext(
-                "Kindly select a folder where scraped data will be saved"
-            )
-            self.outputfolderpath = filedialog.askdirectory()
-
-            with open(self.settingsPath, "w") as f:
-                json.dump({"path": self.outputfolderpath}, f)
-
-        elif os.path.exists(self.outputfolderpath):
-            pass
-        else:
-            self.__replacingtext(
-                "The folder you selected is no longer present.\nSo select new folder"
-            )
-
-            self.outputfolderpath = filedialog.askdirectory()
-            with open(self.settingsPath, "w") as f:
-                json.dump({"path": self.outputfolderpath}, f)
-
-            self.__replacingtext("")
-
-    def resetsettings(self):
-        with open(self.settingsPath, "w") as f:
-            json.dump({"path": ""}, f)
 
 
 if __name__ == "__main__":

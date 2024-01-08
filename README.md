@@ -1,8 +1,11 @@
 # Zubdata - Google Maps Scraper
 
+## Version: 2.0.0
+
+## Note: 
+**Our all scrapers are working, if you find any issue or bug please open an issue with the detail of issue. We will try to resolve it quickly for you.**
 
 <img src="Readme assets/zubdata google maps scraper.jpg" alt="Zubdata open sourced google maps scraper">
-
 
 Welcome to the Zubdata GitHub Google Maps Scraper repository, an open-source GUI tool built in Python. This tool allows you to extract data from Google Maps using a user-friendly interface.
 Documentation can be found at this [link](https://zubdata.com/tools/google-maps-scraper) 🔗
@@ -13,21 +16,12 @@ Documentation can be found at this [link](https://zubdata.com/tools/google-maps-
 - Scrapes various data from Google Maps, such as business names, addresses, phone number, website, ratings, and total reviews.
 - Fast and efficient 🚀
 
-
-## Repository Structure
-
-The repository is organized as follows:
-
-- `scraper` folder: Contains the source code of the Google Maps Scraper tool.
-- `image` folder: Contains images required for the application's user interface.
-- `settings` folder: Contains the settings in json file for configuring the path where the scraped data will be saved.
-- `requirements.txt`: Lists all the required dependencies for running the Google Maps Scraper tool.
-
 ## Getting Started
 
 To get started with the Google Maps Scraper, follow these steps:
 
 1. Clone the repository to your local machine:
+
    ```shell
    git clone https://github.com/Zubdata/Google-Maps-Scraper.git
    ```
@@ -37,10 +31,7 @@ To get started with the Google Maps Scraper, follow these steps:
    pip install -r requirements.txt
    ```
 
-3. Launch the Google Maps Scraper GUI by running the **frontend.py** file. <br>
-   **Note:** Run the file in main directory "Google map scraper" instead of sub-directory "scraper"
-
-5. Use the GUI to enter your search criteria and initiate the scraping process.
+`For further helping docs please visit our` [documentation](https://zubdata.com/tools/google-maps-scraper/) `page`
 
 ## Contributing
 
@@ -71,6 +62,7 @@ If you encounter any issues or have any questions or suggestions, please feel fr
 Happy scraping with Zubdata's Google Maps Scraper! ✨
 
 ## Buy me a coffee☕
+
 If you find my Google Maps scraper project helpful, consider supporting me with a coffee! Your contribution will help fuel late-night coding sessions and keep the code flowing. Every coffee is greatly appreciated and goes a long way in supporting the development of more useful tools and resources. Thank you for your generosity!
 
 [![Buy Me A Coffee](https://img.buymeacoffee.com/button-api/?slug=zubdata&button_colour=FFDD00&font_colour=000000&font_family=Lato&outline_colour=000000&coffee_colour=ffffff)](https://www.buymeacoffee.com/zubdata)
