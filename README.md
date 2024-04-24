@@ -8,7 +8,7 @@
 <img src="Readme assets/zubdata google maps scraper.jpg" alt="Zubdata open sourced google maps scraper">
 
 Welcome to the Zubdata GitHub Google Maps Scraper repository, an open-source GUI tool built in Python. This tool allows you to extract data from Google Maps using a user-friendly interface.
-Documentation can be found at this [link](https://zubdata.com/docs/google-maps-scraper/getting-started/) 🔗
+Documentation can be found at this [link](https://zubdata.com/docs/google-maps-scraper/getting-started/installation/) 🔗
 
 ## Features
 
@@ -31,7 +31,7 @@ To get started with the Google Maps Scraper, follow these steps:
    pip install -r requirements.txt
    ```
 
-`For further helping docs please visit our` [documentation](https://zubdata.com/docs/google-maps-scraper/getting-started/) `page`
+`For further helping docs please visit our` [documentation](https://zubdata.com/docs/google-maps-scraper/getting-started/installation/) `page`
 
 ## Contributing
 
