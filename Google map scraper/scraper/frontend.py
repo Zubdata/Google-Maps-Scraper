@@ -1,14 +1,17 @@
 """
 This module contain the code for frontend
 """
+
+from .communicator import Communicator
 import tkinter as tk
 from tkinter import ttk,  WORD
 from scraper.scraper import Backend
+from .common  import Common
 import threading
 
 
 
-class Frontend(Backend):
+class Frontend:
     def __init__(self):
         """Initializing frontend layout"""
 
@@ -96,6 +99,11 @@ class Frontend(Backend):
             "Welcome to Google Maps Scraper!\n\nLet's start scraping..."
         )
 
+        self.init_communicator()
+    
+    def init_communicator(self):
+        Communicator.set_frontend_object(self)
+
     def __replacingtext(self, text):
         """This function will insert the text in text showing box"""
 
@@ -132,68 +140,34 @@ class Frontend(Backend):
         """It will close the browser when the app is closed"""
 
         try:
-            super().closeThread.set()
+            # super().closeThread.set()
+            Common.set_close_thread()
             self.root.destroy()
         except:
             pass
 
     def startscraping(self):
-        super().__init__(
+        backend = Backend(
             self.searchQuery,
             self.outputFormatValue,
-            self.messageshowing,
             healdessmode=self.headlessMode
         )
 
-        self.mainscraping()
+        backend.mainscraping()
+    
+    def end_processing(self):
+        self.submit_button.config(state="normal")
+        try:
+            if self.threadToStartBackend.is_alive():
+                self.threadToStartBackend.join()
+        except:
+            pass
 
     def messageshowing(
         self,
-        interruptionerror=False,
-        savingdata=False,
-        totalrecords=None,
-        custom=False,
-        value=None,
-        noresultfound=False,
-        exception=None
-    ):
+        message):
 
-        if interruptionerror:
-            self.__replacingtext("Interruption in browser is absorved")
-            if exception:
-                self.__replacingtext("Error is: " + exception)
-
-            self.submit_button.config(state="normal")
-            try:
-                if self.threadToStartBackend.is_alive():
-                    self.threadToStartBackend.join()
-            except:
-                pass
-
-        elif savingdata:
-            self.__replacingtext(
-                f"Scraped data is saved\nTotal records saved: {totalrecords}"
-            )
-            self.submit_button.config(state="normal")
-            try:
-                if self.threadToStartBackend.is_alive():
-                    self.threadToStartBackend.join()
-            except:
-                pass
-
-        elif noresultfound:
-            self.submit_button.config(state="normal")
-            try:
-                if self.threadToStartBackend.is_alive():
-                    self.threadToStartBackend.join()
-            except:
-                pass
-
-            self.__replacingtext(
-                "We are sorry but, No results found for your search query on googel maps....")
-
-        elif custom:
-            self.__replacingtext(text=value)
+        self.__replacingtext(message)
 
 
 if __name__ == "__main__":

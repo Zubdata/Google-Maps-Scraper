@@ -1,0 +1,6 @@
+
+
+ERROR_CODES  = {
+'NO_RECORD_TO_SAVE' : 'ds0',
+'ERR_WHILE_PARSING_DETAILS':'pp0',
+}

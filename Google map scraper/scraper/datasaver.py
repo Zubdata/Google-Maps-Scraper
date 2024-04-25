@@ -4,14 +4,15 @@ This module contain the code for saving the scraped data
 
 
 import pandas as pd
+from .communicator import Communicator
 from .settings import OUTPUT_PATH
 import os
+from .error_codes import ERROR_CODES
 
 
 class DataSaver:
-    def __init__(self, outputformat, messageshowfunc) -> None:
-        self.outputFormat = outputformat
-        self.messageShowFunc = messageshowfunc
+    def __init__(self) -> None:
+        self.outputFormat = Communicator.get_output_format()
 
     def save(self, datalist):
         """
@@ -21,7 +22,7 @@ class DataSaver:
         """
 
         if len(datalist) > 0:
-            self.messageShowFunc(custom=True, value="Saving the data")
+            Communicator.show_message("Saving the scraped data")
 
             dataFrame = pd.DataFrame(datalist)
             totalRecords = dataFrame.shape[0]
@@ -57,8 +58,9 @@ class DataSaver:
             elif self.outputFormat == "json":
                 dataFrame.to_json(joinedPath, indent=4, orient="records")
 
-            self.messageShowFunc(savingdata=True, totalrecords=totalRecords)
+            Communicator.show_message(f"Hurrah! Scraped data successfully saved! Total records saved: {totalRecords}. If you're loving this free tool, consider fueling us with a coffee! Your support helps us keep democratizing automation. ☕️ Support us here: https://www.buymeacoffee.com/zubdata")
+            
         else:
-            self.messageShowFunc(
-                custom=True, value="Oops! You did not scrape any record..."
-            )
+            Communicator.show_error_message("Oops! Could not scrape the data because you did not scrape any record.",{ERROR_CODES['NO_RECORD_TO_SAVE']})
+
+

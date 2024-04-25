@@ -30,6 +30,10 @@ To get started with the Google Maps Scraper, follow these steps:
    ```shell
    pip install -r requirements.txt
    ```
+3. Run the command in root directory:
+   ```shell
+   python "Google map scraper\starter.py" start
+   ```
 
 `For further helping docs please visit our` [documentation](https://zubdata.com/docs/google-maps-scraper/getting-started/installation/) `page`
 

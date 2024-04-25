@@ -13,7 +13,6 @@ def main():
     args = parser.parse_args()
     if args.value == "start":
         app = Frontend()
-        print("starting...")
         app.root.protocol("WM_DELETE_WINDOW", app.closingbrowser)
         app.root.mainloop()
 
