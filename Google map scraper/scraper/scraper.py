@@ -35,7 +35,10 @@ class Backend(Base):
 
         self.init_driver()
         self.scroller = Scroller(driver=self.driver)
+        self.init_communicator()
 
+    def init_communicator(self):
+        Communicator.set_backend_object(self)
 
 
     def init_driver(self):

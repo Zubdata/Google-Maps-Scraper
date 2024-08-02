@@ -9,7 +9,6 @@ from .settings import OUTPUT_PATH
 import os
 from .error_codes import ERROR_CODES
 
-
 class DataSaver:
     def __init__(self) -> None:
         self.outputFormat = Communicator.get_output_format()
@@ -27,7 +26,8 @@ class DataSaver:
             dataFrame = pd.DataFrame(datalist)
             totalRecords = dataFrame.shape[0]
 
-            filename = "/gms output"
+            searchQuery = Communicator.get_search_query()
+            filename = f"{searchQuery} - GMS output"
 
             if self.outputFormat == "excel":
                 extension = ".xlsx"
@@ -35,7 +35,10 @@ class DataSaver:
                 extension = ".csv"
             elif self.outputFormat == "json":
                 extension = ".json"
-
+                
+             # Create the output directory if it does not exist
+            if not os.path.exists(OUTPUT_PATH):
+                os.makedirs(OUTPUT_PATH)
             joinedPath = OUTPUT_PATH + filename + extension
 
             if os.path.exists(joinedPath):

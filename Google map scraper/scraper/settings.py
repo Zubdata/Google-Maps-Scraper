@@ -4,6 +4,6 @@ https://zubdata.com/tools/google-maps-scraper/
 """
 
 
-OUTPUT_PATH = "."
+OUTPUT_PATH = "output/"
 
 DRIVER_EXECUTABLE_PATH = None
