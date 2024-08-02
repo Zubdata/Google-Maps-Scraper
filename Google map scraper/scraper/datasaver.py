@@ -44,7 +44,7 @@ class DataSaver:
             if os.path.exists(joinedPath):
                 index = 1
                 while True:
-                    filename = f"/gms output{index}"
+                    filename = f"{searchQuery} - GMS output ({index})"
 
                     joinedPath = OUTPUT_PATH + filename + extension
 
