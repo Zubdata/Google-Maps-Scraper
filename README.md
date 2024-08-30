@@ -1,6 +1,6 @@
 # Zubdata - Google Maps Scraper
 
-## Version: 3.0.0
+## Version: 3.1.0
 
 ## Note: 
 **Our all scrapers are working, if you find any issue or bug please open an issue with the detail of issue. We will try to resolve it quickly for you.**
@@ -13,8 +13,34 @@ Documentation can be found at this [link](https://zubdata.com/docs/google-maps-s
 ## Features
 
 - User-friendly graphical interface for easy navigation and interaction. 😊
-- Scrapes various data from Google Maps, such as business names, addresses, phone number, website, ratings, and total reviews.
+- Scrapes various data from Google Maps, such as:
+  - **Category**
+  - **Name**
+  - **Phone Number**
+  - **Google Maps URL**
+  - **Website**
+  - **Address**
+  - **Total Reviews**
+  - **Rating**
+  - **Business Status**
+  - **Booking Links**
+  - **Hours**
 - Fast and efficient 🚀
+
+## Sample Data
+    {
+        "Category":"Restaurant",
+        "Name":"Veh\u0101ri Village",
+        "Phone":"0300 0020103",
+        "Google Maps URL":"https:\/\/www.google.com\/maps\/place\/Veh%C4%81ri+Village\/data=!4m7!3m6!1s0x393cc006c30226c7:0xb71394954cfc0b22!8m2!3d30.0558272!4d72.3348188!16s%2Fg%2F11cmp6z14g!19sChIJxyYCwwbAPDkRIgv8TJWUE7c?authuser=0&hl=en&rclk=1",
+        "Website":"https:\/\/www.facebook.com\/VehariVillage\/",
+        "Business Status":"Open\u22c5 Closes 1\u202fam",
+        "Address":"The Royal Gardens Society, Khanewal Vehari Rd, Vehari, Punjab",
+        "Total Reviews":"(347)",
+        "Booking Links":null,
+        "Rating":"4.2 stars ",
+        "Hours":"Friday9\u202fam\u20131\u202famSaturday9\u202fam\u20131\u202famSunday9\u202fam\u201312\u202famMonday9\u202fam\u20131\u202famTuesday9\u202fam\u20131\u202famWednesday9\u202fam\u20131\u202famThursday9\u202fam\u20131\u202famSuggest new hours"
+    }
 
 ## Getting Started
 
@@ -35,7 +61,7 @@ To get started with the Google Maps Scraper, follow these steps:
    python "Google map scraper\starter.py" start
    ```
 
-`For further helping docs please visit our` [documentation](https://zubdata.com/docs/google-maps-scraper/getting-started/installation/) `page`
+`For further helping docs please visit our` [documentation](https://zubdata.com/docs/google-maps-scraper) `page`
 
 ## Contributing
 

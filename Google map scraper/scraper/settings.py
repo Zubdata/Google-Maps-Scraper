@@ -1,9 +1,9 @@
 """
 These are settings of the scraper. To see thier details, please visit:
-https://zubdata.com/tools/google-maps-scraper/
+https://zubdata.com/docs/google-maps-scraper/getting-started/settings/
 """
 
 
-OUTPUT_PATH = "."
+OUTPUT_PATH = "output/"
 
 DRIVER_EXECUTABLE_PATH = None

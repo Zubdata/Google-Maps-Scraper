@@ -3,6 +3,7 @@
 class Communicator:
 
     __frontend_object = None
+    __backend_object = None
 
     @classmethod
     def show_message(cls, message):
@@ -33,3 +34,11 @@ class Communicator:
     @classmethod
     def get_output_format(cls):
         return cls.__frontend_object.outputFormatValue
+    
+    @classmethod
+    def set_backend_object(cls, backend_object):
+        cls.__backend_object = backend_object
+    
+    @classmethod
+    def get_search_query(cls):
+        return cls.__backend_object.searchquery
