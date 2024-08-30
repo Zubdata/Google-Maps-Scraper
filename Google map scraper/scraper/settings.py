@@ -1,6 +1,6 @@
 """
 These are settings of the scraper. To see thier details, please visit:
-https://zubdata.com/tools/google-maps-scraper/
+https://zubdata.com/docs/google-maps-scraper/getting-started/settings/
 """
 
 

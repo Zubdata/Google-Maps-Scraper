@@ -43,6 +43,7 @@ class Parser(Base):
             # Extract rating
             try:
                 rating = soup.find("span", class_="ceNzKf").get("aria-label")
+                rating = rating.replace("stars", "").strip()
             except:
                 rating = None
 

@@ -106,3 +106,7 @@ Thumbs.db
 .pdm.toml
 .pdm.lock
 .pdm.cache/
+
+
+# output folder
+output/
