@@ -1,0 +1,5 @@
+This command is for only one time
+pip install -r requirements.txt
+
+To start the application
+python "Google map scraper\starter.py" start

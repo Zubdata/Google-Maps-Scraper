@@ -5,6 +5,8 @@ from .communicator import Communicator
 from .datasaver import DataSaver
 from .base import Base
 from .common import Common
+import requests
+import re, os
 
 class Parser(Base):
 
@@ -33,8 +35,8 @@ class Parser(Base):
             """return document.querySelector("[role='main']")""")
         try:
             # Initialize data points
-            rating, totalReviews, address, websiteUrl, phone, hours, category, gmapsUrl, bookingLink, businessStatus = (
-                None, None, None, None, None, None, None, None, None, None
+            rating, totalReviews, address, websiteUrl,email, phone, hours, category, gmapsUrl, bookingLink, businessStatus = (
+                None, None, None, None, None, None, None, None, None, None, None
             )
 
             html = infoSheet.get_attribute("outerHTML")
@@ -77,8 +79,15 @@ class Parser(Base):
                 websiteTag = soup.find("a", {"aria-label": lambda x: x and "Website:" in x})
                 if websiteTag:
                     websiteUrl = websiteTag.get("href")
+
             except:
                 websiteUrl = None
+            # Extract Email
+            try:
+                if websiteUrl:
+                    email = self.find_mail(websiteUrl)
+            except:
+                email = None
 
             # Extract booking link
             try:
@@ -119,6 +128,7 @@ class Parser(Base):
                 "Phone": phone,
                 "Google Maps URL": gmapsUrl,
                 "Website": websiteUrl,
+                "email": email,
                 "Business Status": businessStatus,
                 "Address": address,
                 "Total Reviews": totalReviews,
@@ -131,6 +141,61 @@ class Parser(Base):
 
         except Exception as e:
             Communicator.show_error_message(f"Error occurred while parsing a location. Error is: {str(e)}", ERROR_CODES['ERR_WHILE_PARSING_DETAILS'])
+
+#find email
+    def find_mail(self,url):
+        try:
+            headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36'}
+            source_code = requests.get(url, headers=headers, timeout=(10))
+            curr = source_code.url
+
+            original_curr = curr
+            plain_text = source_code.text
+            match = re.findall(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}', plain_text)
+
+            if not match:
+                urls = [original_curr + '/contact/', original_curr + '/Contact/']
+                for cu in urls:
+                    curr = cu
+                    source_code = requests.get(url, headers=headers, timeout=(10))
+                    plain_text = source_code.text
+                    match = re.findall(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}', plain_text)
+
+                    if match:
+                        break
+
+            if not match:
+                match = re.findall(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}', original_curr)
+
+            if not match:
+                
+                if self.driver is None:
+                    print("Error: WebDriver failed to initialize.")
+                    return "" 
+
+                self.driver.get(original_curr)
+                plain_text = self.driver.page_source
+                match = re.findall(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}', plain_text)
+
+                if not match:
+                    urls = [original_curr + '/contact/', original_curr + '/Contact/']
+                    for cu in urls:
+                        self.driver.get(cu)
+                        plain_text = self.driver.page_source
+                        match = re.findall(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}', plain_text)
+
+                        if match:
+                            break
+
+                # self.driver.quit() 
+
+            match = [email for email in set(match) if re.match(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$', email)]
+            email = ', '.join(match)
+            return email
+
+        except Exception as e:
+            print(f"Error in find_mail: {e}")
+        return ""
 
     def main(self, allResultsLinks):
         Communicator.show_message("Scrolling is done. Now going to scrape each location")
