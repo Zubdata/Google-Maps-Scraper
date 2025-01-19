@@ -3,9 +3,11 @@
 All notable changes to this project will be documented in this file.
 
 
-## [Unreleased]
+## [3.2.0] - 2025-01-19
 ### Added
-- Added functionality to extract email addresses from location websites
+- Implemented functionality to extract email addresses from location websites.
+- Introduced setup automation scripts to streamline the scraper setup process.
+
 
 ## [3.1.0] - 2024-04-26
 ### Added
