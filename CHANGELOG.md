@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+
+## [Unreleased]
+### Added
+- Added functionality to extract email addresses from location websites
+
 ## [3.1.0] - 2024-04-26
 ### Added
 - Added additional data fields

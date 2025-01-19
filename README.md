@@ -2,16 +2,10 @@
 
 ## Version: 3.1.0
 
-## Note: 
-**Our all scrapers are working, if you find any issue or bug please open an issue with the detail of issue. We will try to resolve it quickly for you.**
 
-<img src="Readme assets/zubdata google maps scraper.jpg" alt="Zubdata open sourced google maps scraper">
-
-Welcome to the Zubdata GitHub Google Maps Scraper repository, an open-source GUI tool built in Python. This tool allows you to extract data from Google Maps using a user-friendly interface.
-Documentation can be found at this [link](https://zubdata.com/docs/google-maps-scraper/getting-started/installation/) 🔗
 
 ## Features
-
+- Designed to be highly user-friendly for **beginners**.
 - User-friendly graphical interface for easy navigation and interaction. 😊
 - Scrapes various data from Google Maps, such as:
   - **Category**
@@ -19,6 +13,7 @@ Documentation can be found at this [link](https://zubdata.com/docs/google-maps-s
   - **Phone Number**
   - **Google Maps URL**
   - **Website**
+  - **Email**
   - **Address**
   - **Total Reviews**
   - **Rating**
@@ -27,38 +22,65 @@ Documentation can be found at this [link](https://zubdata.com/docs/google-maps-s
   - **Hours**
 - Fast and efficient 🚀
 
+
+
+
+## Note: 
+**Our all scrapers are working, if you find any issue or bug please open an issue with the detail of issue. We will try to resolve it quickly for you.**
+
+<img src="Readme assets/zubdata google maps scraper.jpg" alt="Zubdata open sourced google maps scraper">
+
+Welcome to the Zubdata GitHub Google Maps Scraper repository, an open-source GUI tool built in Python. This tool allows you to extract data from Google Maps using a user-friendly interface.
+Documentation can be found at this [link](https://zubdata.com/docs/google-maps-scraper/getting-started/installation/) 🔗
+
 ## Sample Data
     {
-        "Category":"Restaurant",
-        "Name":"Veh\u0101ri Village",
-        "Phone":"0300 0020103",
-        "Google Maps URL":"https:\/\/www.google.com\/maps\/place\/Veh%C4%81ri+Village\/data=!4m7!3m6!1s0x393cc006c30226c7:0xb71394954cfc0b22!8m2!3d30.0558272!4d72.3348188!16s%2Fg%2F11cmp6z14g!19sChIJxyYCwwbAPDkRIgv8TJWUE7c?authuser=0&hl=en&rclk=1",
-        "Website":"https:\/\/www.facebook.com\/VehariVillage\/",
-        "Business Status":"Open\u22c5 Closes 1\u202fam",
-        "Address":"The Royal Gardens Society, Khanewal Vehari Rd, Vehari, Punjab",
-        "Total Reviews":"(347)",
+        "Category":"Shopping mall",
+        "Name":"Packages Mall",
+        "Phone":"(042) 111 696 255",
+        "Google Maps URL":"https:\/\/www.google.com\/maps\/place\/Packages+Mall\/data=!4m7!3m6!1s0x39190680e8f2d445:0x32ba63a1571efb2a!8m2!3d31.4715199!4d74.3555422!16s%2Fg%2F11gmxj94jy!19sChIJRdTy6IAGGTkRKvseV6FjujI?authuser=0&hl=en&rclk=1",
+        "Website":"http:\/\/www.packagesmall.com\/",
+        "email":"careers@packagesmall.com, info@packagesmall.com",
+        "Business Status":"Open\u22c5 Closes 10\u202fpm",
+        "Address":"Main Walton Rd, Shahrah-E-Roomi Nishtar Town, Lahore, Punjab 54750",
+        "Total Reviews":"(67,295)",
         "Booking Links":null,
-        "Rating":"4.2 stars ",
-        "Hours":"Friday9\u202fam\u20131\u202famSaturday9\u202fam\u20131\u202famSunday9\u202fam\u201312\u202famMonday9\u202fam\u20131\u202famTuesday9\u202fam\u20131\u202famWednesday9\u202fam\u20131\u202famThursday9\u202fam\u20131\u202famSuggest new hours"
+        "Rating":"4.6",
+        "Hours":"Sunday11\u202fam\u201310\u202fpm\ue14dMonday11\u202fam\u201310\u202fpm\ue14dTuesday11\u202fam\u201310\u202fpm\ue14dWednesday11\u202fam\u201310\u202fpm\ue14dThursday11\u202fam\u201310\u202fpm\ue14dFriday11\u202fam\u201310\u202fpm\ue14dSaturday11\u202fam\u201310\u202fpm\ue14dSuggest new hours"
     }
 
 ## Getting Started
 
 To get started with the Google Maps Scraper, follow these steps:
 
-1. Clone the repository to your local machine:
+### 1. Clone the repository to your local machine:
 
    ```shell
    git clone https://github.com/Zubdata/Google-Maps-Scraper.git
    ```
 
-2. Install the required dependencies by running the following command:
-   ```shell
-   pip install -r requirements.txt
+### 2. Setup the Environment for Scraper
+
+- For Windows, run:
+  ```bash
+  ./setup_win.cmd
    ```
-3. Run the command in root directory:
+- For Linux, run:
+   ```
+   ./setup_linux.sh
+   ```
+
+   It will auto install the dependencies
+
+## 3. Install the Driver
+
+   - If you already have a driver compatible with your Chrome browser, specify the driver path in `app/settings.py`.
+   - If you don't have a driver, the scraper will automatically install it.
+   - If the automatic installation fails, download the driver from the [Chrome Official Page](https://googlechromelabs.github.io/chrome-for-testing/#stable) and specify the driver path in `app/settings.py`. And then re-run the scraper.
+
+### 3. Run the scraper:
    ```shell
-   python "Google map scraper\starter.py" start
+   python app/run.py
    ```
 
 `For further helping docs please visit our` [documentation](https://zubdata.com/docs/google-maps-scraper) `page`
@@ -75,7 +97,7 @@ We welcome contributions from the open-source community to enhance the Google Ma
 
 4. Push your changes to your forked repository.
 
-5. Create a pull request to the `main` branch of the repository.
+5. Create a pull request to the `development` branch of the repository.
 
 6. Wait for the code review and address any feedback received.
 
@@ -89,7 +111,7 @@ The Google Maps Scraper tool is open-source software licensed under the [GNU GEN
 
 If you encounter any issues or have any questions or suggestions, please feel free to open an issue. We appreciate your feedback and are here to assist you.
 
-Happy scraping with Zubdata's Google Maps Scraper! ✨
+`Developed with Love for you ✨`
 
 ## Buy me a coffee☕
 

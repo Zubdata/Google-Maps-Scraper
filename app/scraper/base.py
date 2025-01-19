@@ -8,7 +8,7 @@ from .common import Common
 
 
 class Base:
-    timeout = 60
+    timeout = 120
 
     def openingurl(self, url: str):
         """
